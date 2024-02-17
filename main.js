@@ -28,45 +28,62 @@ function getButtonValue(button) { // Listener can access its triggering event
 }
 
 function updateDisplayValue(value) {
-    if (value === "empty") {
-        displayValue = "0";
-    } else {
-        displayValue += value;
-    }
-    screen.innerHTML = parseInt(displayValue);
+    screen.innerHTML = parseInt(value);
 }
 
 const numberButtons = document.getElementsByClassName("number");
 const operatorButtons = document.getElementsByClassName("operator");
 const clearButton = document.getElementsByClassName("clear");
+const equalButton = document.getElementsByClassName("equal");
 const screen = document.getElementById('display');
 
 let numberOne = 0;
 let numberTwo = 0;
-let operator;
-let displayValue = "";
+let operatorFlag = false;
+let operator = "";
+let displayValue = "0";
 
-Array.from(numberButtons).forEach(button=> button.addEventListener("click", function(){
-    let value = getButtonValue(button);
-    updateDisplayValue(value);
+// Resets Calculator
+Array.from(clearButton).forEach(button => button.addEventListener("click", function() {
+    displayValue = "0";
+    operatorFlag = false;
+    numberOne = 0;
+    numberTwo = 0;
+    operator = "";
+    updateDisplayValue(displayValue);
 }));
 
+// Get Value from Number Buttons and add it to screen if no operator has been selected
+Array.from(numberButtons).forEach(button=> button.addEventListener("click", function(){
+    let value = getButtonValue(button);
+    if (operatorFlag === false) {
+        displayValue += value
+    } else {
+        displayValue = value;
+        operatorFlag = false;
+    }
+    updateDisplayValue(displayValue);
+}));
+
+// Set Operator Flag for True
+// get Display for NumberOne if NumberOne is Empty, else use Display for NumberTwo
 Array.from(operatorButtons).forEach(button=> button.addEventListener("click", function(){
     operator = getButtonValue(button);
+    operatorFlag = true;
 
     if (numberOne === 0) {
         numberOne = parseInt(displayValue);
-        updateDisplayValue("empty");
     } else {
         numberTwo = parseInt(displayValue);
-        updateDisplayValue("empty");
         numberOne = operate(numberOne, numberTwo, operator);
+        numberTwo = 0;
         updateDisplayValue(numberOne);
     }
 }));
 
-Array.from(clearButton).forEach(button => button.addEventListener("click", function() {
-    updateDisplayValue("empty");
-    numberOne = 0;
-    numberTwo = 0;
+Array.from(equalButton).forEach(button => button.addEventListener("click", function() {
+/*    numberTwo = parseInt(displayValue); 
+    numberOne = operate(numberOne, numberTwo, operator);
+    updateDisplayValue(numberOne); */
 }));
+
