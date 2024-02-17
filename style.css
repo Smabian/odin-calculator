@@ -43,8 +43,12 @@ button:active {
     background-color: grey;
 }
 
-.clear, .zero {
+.clear {
     flex-basis: 75%;
+}
+
+.zero {
+    flex-basis: 50%;
 }
 
 .clear {

@@ -42,7 +42,7 @@ function calculateOutcome(){
     } else {
         numberTwo = parseFloat(displayValue);
         numberOne = operate(numberOne, numberTwo, operator);
-        console.log(numberOne);
+        updateDisplayValue(numberOne);
         numberTwo = 0;
         displayValue = 0;
         operator = "";
