@@ -28,23 +28,38 @@ function getButtonValue(button) { // Listener can access its triggering event
 }
 
 function updateDisplayValue(value) {
-    if (value === "clear") {
-        displayValue = "0";
+    if (value === "empty") {
+        displayValue = "";
     } else {
         displayValue += value;
     }
     screen.innerHTML = displayValue;
 }
 
-const buttons = document.getElementsByTagName("button");
+const numberButtons = document.getElementsByClassName("number");
+const operatorButtons = document.getElementsByClassName("operator");
 const screen = document.getElementById('display');
 
-let numberOne;
-let numberTwo;
+let numberOne = 0;
+let numberTwo = 0;
 let operator;
 let displayValue = "";
 
-Array.from(buttons).forEach(button=> button.addEventListener("click", function(){
+Array.from(numberButtons).forEach(button=> button.addEventListener("click", function(){
     let value = getButtonValue(button);
     updateDisplayValue(value);
+}));
+
+Array.from(operatorButtons).forEach(button=> button.addEventListener("click", function(){
+    operator = getButtonValue(button);
+
+    if (numberOne === 0) {
+        numberOne = parseInt(displayValue);
+        updateDisplayValue("empty");
+    } else {
+        numberTwo = parseInt(displayValue);
+        updateDisplayValue("empty");
+        numberOne = operate(numberOne, numberTwo, operator);
+        updateDisplayValue(numberOne);
+    }
 }));
