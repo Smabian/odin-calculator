@@ -28,7 +28,7 @@ function getButtonValue(button) { // Listener can access its triggering event
 }
 
 function updateDisplayValue(value) {
-    screen.innerHTML = parseInt(value);
+    screen.innerHTML = parseFloat(value);
 }
 
 const numberButtons = document.getElementsByClassName("number");
@@ -72,11 +72,12 @@ Array.from(operatorButtons).forEach(button=> button.addEventListener("click", fu
     operatorFlag = true;
 
     if (numberOne === 0) {
-        numberOne = parseInt(displayValue);
+        numberOne = parseFloat(displayValue);
     } else {
-        numberTwo = parseInt(displayValue);
+        numberTwo = parseFloat(displayValue);
         numberOne = operate(numberOne, numberTwo, operator);
         numberTwo = 0;
+        displayValue = 0;
         updateDisplayValue(numberOne);
     }
 }));
@@ -87,3 +88,7 @@ Array.from(equalButton).forEach(button => button.addEventListener("click", funct
     updateDisplayValue(numberOne); */
 }));
 
+console.log(numberOne);
+console.log(numberTwo);
+console.log(displayValue);
+console.log(operator);
