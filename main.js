@@ -24,7 +24,7 @@ function operate (a, b, operator) {
         case "+": return add(a,b); break;
         case "-": return subtract(a,b); break;
         case "*": return multiply(a,b); break;
-        case "/": return divide(a,b);
+        case "÷": return divide(a,b);
     }
 }
 
@@ -54,6 +54,7 @@ const numberButtons = document.getElementsByClassName("number");
 const operatorButtons = document.getElementsByClassName("operator");
 const clearButton = document.getElementsByClassName("clear");
 const equalButton = document.getElementsByClassName("equal");
+const backspaceButton = document.getElementsByClassName("backspace");
 const screen = document.getElementById('display');
 
 let numberOne = 0;
@@ -107,8 +108,14 @@ Array.from(equalButton).forEach(button => button.addEventListener("click", funct
     calculateOutcome();
 }));
 
-console.log(numberOne);
-console.log(numberTwo);
-console.log(displayValue);
-console.log(operator);
-console.log(operatorFlag);
+Array.from(backspaceButton).forEach(button => button.addEventListener("click", function() {
+    //Remove One place from right of display value
+    if (displayValue === "0") {
+        displayValue = 0;
+    } else if (typeof displayValue === "string") {
+        displayValue = displayValue.slice(0, -1); 
+        updateDisplayValue(displayValue);
+    }
+}));
+
+
