@@ -29,15 +29,16 @@ function getButtonValue(button) { // Listener can access its triggering event
 
 function updateDisplayValue(value) {
     if (value === "empty") {
-        displayValue = "";
+        displayValue = "0";
     } else {
         displayValue += value;
     }
-    screen.innerHTML = displayValue;
+    screen.innerHTML = parseInt(displayValue);
 }
 
 const numberButtons = document.getElementsByClassName("number");
 const operatorButtons = document.getElementsByClassName("operator");
+const clearButton = document.getElementsByClassName("clear");
 const screen = document.getElementById('display');
 
 let numberOne = 0;
@@ -62,4 +63,10 @@ Array.from(operatorButtons).forEach(button=> button.addEventListener("click", fu
         numberOne = operate(numberOne, numberTwo, operator);
         updateDisplayValue(numberOne);
     }
+}));
+
+Array.from(clearButton).forEach(button => button.addEventListener("click", function() {
+    updateDisplayValue("empty");
+    numberOne = 0;
+    numberTwo = 0;
 }));
