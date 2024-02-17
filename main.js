@@ -11,7 +11,12 @@ function multiply (a,b) {
 }
 
 function divide (a, b) {
-    return a / b;
+    if (b===0) {
+        screen.innerHTML = "-- black hole --";
+        return;
+    } else {
+        return a / b;
+    }
 }
 
 function operate (a, b, operator) {
@@ -28,7 +33,7 @@ function getButtonValue(button) { // Listener can access its triggering event
 }
 
 function updateDisplayValue(value) {
-    screen.innerHTML = parseFloat(value);
+    screen.innerHTML = parseFloat(parseFloat(value).toFixed(9));
 }
 
 function calculateOutcome(){
@@ -37,7 +42,7 @@ function calculateOutcome(){
     } else {
         numberTwo = parseFloat(displayValue);
         numberOne = operate(numberOne, numberTwo, operator);
-        updateDisplayValue(numberOne);
+        console.log(numberOne);
         numberTwo = 0;
         displayValue = 0;
         operator = "";
@@ -89,8 +94,12 @@ Array.from(operatorButtons).forEach(button=> button.addEventListener("click", fu
 
     if (numberOne === 0) {
         numberOne = parseFloat(displayValue);
+        displayValue = 0;
+
     } else {
         calculateOutcome();
+        displayValue = 0;
+        operator = getButtonValue(button);
     }
 }));
 
