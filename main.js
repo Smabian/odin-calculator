@@ -23,8 +23,18 @@ function operate (a, b, operator) {
     }
 }
 
+function getButtonValue(button) { // Listener can access its triggering event
+    return button.innerHTML;
+}
+
 let numberOne;
 let numberTwo;
 let operator;
 
-console.log(operate(2,4, "/"));
+const buttons = document.getElementsByTagName("button");
+const screen = document.getElementById('display');
+
+Array.from(buttons).forEach(button=> button.addEventListener("click", function(){
+    getButtonValue(button);
+}));
+
