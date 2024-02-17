@@ -31,6 +31,20 @@ function updateDisplayValue(value) {
     screen.innerHTML = parseFloat(value);
 }
 
+function calculateOutcome(){
+    if (numberOne === 0 || displayValue === 0) {
+        updateDisplayValue(numberOne);
+    } else {
+        numberTwo = parseFloat(displayValue);
+        numberOne = operate(numberOne, numberTwo, operator);
+        updateDisplayValue(numberOne);
+        numberTwo = 0;
+        displayValue = 0;
+        operator = "";
+        operatorFlag = false;
+    } 
+}
+
 const numberButtons = document.getElementsByClassName("number");
 const operatorButtons = document.getElementsByClassName("operator");
 const clearButton = document.getElementsByClassName("clear");
@@ -57,7 +71,7 @@ Array.from(clearButton).forEach(button => button.addEventListener("click", funct
 Array.from(numberButtons).forEach(button=> button.addEventListener("click", function(){
     let value = getButtonValue(button);
     if (operatorFlag === false) {
-        displayValue += value
+        displayValue += value;
     } else {
         displayValue = value;
         operatorFlag = false;
@@ -65,30 +79,27 @@ Array.from(numberButtons).forEach(button=> button.addEventListener("click", func
     updateDisplayValue(displayValue);
 }));
 
-// Set Operator Flag for True
-// get Display for NumberOne if NumberOne is Empty, else use Display for NumberTwo
+// Run Operator Button Actions
 Array.from(operatorButtons).forEach(button=> button.addEventListener("click", function(){
-    operator = getButtonValue(button);
-    operatorFlag = true;
+    if (operator === ""){
+        operator = getButtonValue(button);
+    } else {
+        operatorFlag = true; //Setting OperatorFlag to True, so numberDisplay can be reset
+    }
 
     if (numberOne === 0) {
         numberOne = parseFloat(displayValue);
     } else {
-        numberTwo = parseFloat(displayValue);
-        numberOne = operate(numberOne, numberTwo, operator);
-        numberTwo = 0;
-        displayValue = 0;
-        updateDisplayValue(numberOne);
+        calculateOutcome();
     }
 }));
 
 Array.from(equalButton).forEach(button => button.addEventListener("click", function() {
-/*    numberTwo = parseInt(displayValue); 
-    numberOne = operate(numberOne, numberTwo, operator);
-    updateDisplayValue(numberOne); */
+    calculateOutcome();
 }));
 
 console.log(numberOne);
 console.log(numberTwo);
 console.log(displayValue);
 console.log(operator);
+console.log(operatorFlag);
