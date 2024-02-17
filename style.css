@@ -44,14 +44,14 @@ button:active {
 }
 
 .clear {
-    flex-basis: 75%;
+    flex-basis: 50%;
 }
 
 .zero {
     flex-basis: 50%;
 }
 
-.clear {
+.clear, .backspace {
     background-color: #1b263b;
 }
 
