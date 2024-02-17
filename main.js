@@ -27,14 +27,24 @@ function getButtonValue(button) { // Listener can access its triggering event
     return button.innerHTML;
 }
 
-let numberOne;
-let numberTwo;
-let operator;
+function updateDisplayValue(value) {
+    if (value === "clear") {
+        displayValue = "0";
+    } else {
+        displayValue += value;
+    }
+    screen.innerHTML = displayValue;
+}
 
 const buttons = document.getElementsByTagName("button");
 const screen = document.getElementById('display');
 
-Array.from(buttons).forEach(button=> button.addEventListener("click", function(){
-    getButtonValue(button);
-}));
+let numberOne;
+let numberTwo;
+let operator;
+let displayValue = "";
 
+Array.from(buttons).forEach(button=> button.addEventListener("click", function(){
+    let value = getButtonValue(button);
+    updateDisplayValue(value);
+}));
